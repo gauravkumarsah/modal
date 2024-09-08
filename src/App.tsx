@@ -1,24 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+
+import "./App.css";
+import Modal from "./components/Modal/Modal";
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+
+  const handleConfirm = () => {
+    alert("Confirmed!");
+    setIsModalOpen(false); // Close the modal after confirming
+  };
+
+  const handleCancel = () => {
+    alert("Cancelled!");
+    setIsModalOpen(false); // Close the modal after cancelling
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <button onClick={openModal}>Open Modal</button>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        header="Header Title"
+        primaryButtonText="Primary"
+        secondaryButtonText="Secondary"
+        ghostButtonText="Ghost"
+        onPrimaryButtonClick={handleConfirm}
+        onSecondaryButtonClick={handleCancel}
+        eyebrowText="Eyebrow Text"
+        slotComponent={<div className="slot-component">Slot component</div>}
+        slotVariant="withMargin"
+        buttonCount={1}
+      />
     </div>
   );
 }
